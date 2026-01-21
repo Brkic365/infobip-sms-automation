@@ -60,8 +60,6 @@ const main = async () => {
             const returnedMessageId = responseData.messageId;
             const statusDescription = responseData.status.description;
 
-            console.log(responseData);
-
             const isSuccess = responseData.status.groupName === "PENDING" || 
                               responseData.status.groupName === "ACCEPTED" ||
                               statusDescription.startsWith("Message sent");
