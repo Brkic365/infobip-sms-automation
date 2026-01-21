@@ -1,4 +1,5 @@
 node_modules
 infobip-solution.html
 .env
-messages_updated.csv
+messages_results.csv
+messages.csv
