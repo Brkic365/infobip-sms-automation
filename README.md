@@ -1,38 +1,61 @@
-# Infobip SMS Automation Assignment
+# Infobip SMS Automation
 
-This is a Node.js solution that reads a CSV file, sends SMS messages via the Infobip API (v3), and logs the results back to a file.
+Node.js application that reads SMS data from a CSV file and sends messages via the Infobip SMS API v3.
 
 ## Prerequisites
-- Node.js installed
-- An Infobip Account (API Key & Base URL)
 
-## Setup
-1. Clone the folder.
-2. Install dependencies:
+- Node.js 14+ installed
+- Infobip account with API credentials
 
+## Installation
+
+1. Install dependencies:
 ```bash
-   npm install
+npm install
 ```
 
-3. Configure the environment variables:
-Create a .env file in the root directory and add your credentials:
-
+2. Create `.env` file with your credentials:
 ```env
-INFOBIP_BASE_URL=https://your-base-url.api.infobip.com
-INFOBIP_API_KEY=your_api_key
+INFOBIP_BASE_URL=https://api.infobip.com
+INFOBIP_API_KEY=your_api_key_here
 ```
 
-4. Prepare the input file:
-Update messages.csv with the correct SenderId and your destination phone number.
+3. Prepare `messages.csv` with the following format:
+```csv
+SenderId,MSISDN
+InfoSMS,385991234567
+InfoSMS,385997654321
+```
 
-5. Run the application:
+## Usage
 
+Run the script:
 ```bash
 node index.js
 ```
 
-## Note on Message IDs:
+Results are saved to `messages_results.csv` with message IDs and delivery status.
 
-During testing on the Free Trial account using the shared sender (ServiceSMS / 447491163443), the Infobip platform overrides the custom messageId provided in the request with an internal tracking ID.
+## Configuration
 
-The script handles this by validating the Status Description (e.g., "Pending" or "Message sent") instead of requiring a strict ID match. The output CSV preserves the generated messageId as per the assignment instructions.
+- **SenderId**: Found in Infobip Portal > Settings > Default Sender
+- **MSISDN**: Destination phone number in international format (e.g., 385991234567)
+- **API Key**: Generated in Infobip Portal > API Keys
+
+## Output Format
+```csv
+SenderId,MSISDN,messageId,description
+InfoSMS,385991234567,MSG_1234567890_5678,Message sent to next instance
+```
+
+## Troubleshooting
+
+**Invalid phone format**: Ensure MSISDN uses international format without spaces or special characters
+
+**Authentication error**: Verify API key in `.env` matches your Infobip portal credentials
+
+**Rate limit exceeded**: Script includes 100ms delay between requests; upgrade account if sending large volumes
+
+## License
+
+MIT
